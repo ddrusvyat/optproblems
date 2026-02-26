@@ -7,4 +7,4 @@
     state: "open"
     last_update: "2026-02-26"
   comments: "Convergence to local minima"
-  tags: ["nonconvex optimization", "optimization theory"]
+  tags: ["nonconvex optimization"]
