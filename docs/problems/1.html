@@ -182,14 +182,34 @@
       return cards;
     }
 
+    async function fetchMarkdown(mdName) {
+      const path = window.location.pathname;
+      const dir = path.slice(0, path.lastIndexOf("/") + 1);
+      const candidates = [
+        "./" + mdName,
+        mdName,
+        dir + mdName,
+        window.location.origin + dir + mdName,
+      ];
+
+      for (const url of candidates) {
+        try {
+          const res = await fetch(url, { cache: "no-store" });
+          if (res.ok) return await res.text();
+        } catch (err) {
+          // Try next candidate.
+        }
+      }
+      throw new Error("Could not load " + mdName);
+    }
+
     async function render() {
       const fileName = window.location.pathname.split('/').pop() || '1.html';
-      const mdName = fileName.replace(/\.html$/, '.md');
-      const mdPath = './' + mdName;
+      const mdName = fileName.endsWith(".html")
+        ? fileName.replace(/\.html$/, '.md')
+        : fileName + ".md";
 
-      const res = await fetch(mdPath);
-      if (!res.ok) throw new Error('Could not load ' + mdPath);
-      const raw = await res.text();
+      const raw = await fetchMarkdown(mdName);
 
       const parsed = parseFrontMatter(raw);
       const meta = parsed.meta;
