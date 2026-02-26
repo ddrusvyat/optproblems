@@ -1,5 +1,18 @@
 # Open Problems in Optimization
 
-Optimization has historically been driven by applications, whether in engineering, in large-scale computing, or more recently in machine learning and AI. Progress often begins with a mathematical model that distills and reveals the underlying structure of problems we seek to solve. That structure, once identified, becomes the setting in which new theory is developed, algorithms are designed, and fundamental limits on efficiency are understood. Although open problems do not always dictate the direction of the field, optimization continually gives rise to deep and consequential questions whose resolution can reshape both our theoretical understanding and our computational capabilities.
+A community database for long-standing open problems in optimization theory and related areas.
 
-This repository is intended as a living, community-oriented collection of such foundational open problems in optimization—questions whose answers may meaningfully influence the future of the field and its applications.
+The table below is auto-generated from the YAML file [data/problems.yaml](data/problems.yaml), which is the source of truth for this repository.
+
+- To propose changes, open a PR editing [data/problems.yaml](data/problems.yaml).
+- See [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines and field definitions.
+
+## Table
+
+<!-- TABLE:START -->
+There are 1 problems in total.
+
+| # | Prize | Status | Tags | Comments |
+|---|---|---|---|---|
+| 1 | no | open | nonconvex optimization, optimization theory | convergence to local minima |
+<!-- TABLE:END -->

@@ -1,4 +1,10 @@
 # Optimization problems database
 # Add entries below. See CONTRIBUTING.md for the schema and field definitions.
 
-[]
+- number: "1"
+  prize: "no"
+  status:
+    state: "open"
+    last_update: "2026-02-26"
+  comments: "convergence to local minima"
+  tags: ["nonconvex optimization", "optimization theory"]
