@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Problem X - Title</title>
+  <title>Problem Page</title>
   <script>
     window.MathJax = {
       tex: {
@@ -12,38 +12,194 @@
       }
     };
   </script>
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
   <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
   <style>
-    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif; max-width: 900px; margin: 0 auto; padding: 2rem; line-height: 1.6; color: #24292f; }
-    h1 { margin-bottom: 0.25rem; }
-    .meta { color: #57606a; margin-bottom: 1.5rem; }
-    .block { margin-top: 1.5rem; }
-    a { color: #0969da; }
+    :root {
+      --bg: #ffffff;
+      --text: #24292f;
+      --muted: #57606a;
+      --border: #d0d7de;
+      --soft: #f6f8fa;
+      --accent: #0969da;
+      --ok-bg: #dafbe1;
+      --ok-text: #116329;
+      --radius: 10px;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+      line-height: 1.6;
+    }
+    .wrap {
+      max-width: 920px;
+      margin: 0 auto;
+      padding: 24px 20px 56px;
+    }
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .crumb {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      color: var(--muted);
+      font-size: 14px;
+      margin-bottom: 16px;
+    }
+    .status {
+      display: inline-block;
+      background: var(--ok-bg);
+      color: var(--ok-text);
+      font-weight: 600;
+      font-size: 13px;
+      padding: 3px 10px;
+      border-radius: 999px;
+      margin-bottom: 10px;
+    }
+    h1 {
+      margin: 0;
+      font-size: 36px;
+      line-height: 1.2;
+      letter-spacing: -0.01em;
+    }
+    .subtitle {
+      margin-top: 10px;
+      color: var(--muted);
+      font-size: 16px;
+    }
+    .cards {
+      margin-top: 24px;
+      display: grid;
+      gap: 16px;
+    }
+    .card {
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      background: #fff;
+      padding: 18px 18px 14px;
+    }
+    .card h2 {
+      margin: 0 0 10px;
+      font-size: 22px;
+      line-height: 1.3;
+    }
+    .card p, .card ul, .card ol { margin-top: 8px; }
+    .card pre {
+      background: var(--soft);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 12px;
+      white-space: pre-wrap;
+      font-size: 13px;
+      line-height: 1.45;
+      overflow-x: auto;
+    }
+    .card code {
+      background: var(--soft);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 1px 4px;
+      font-size: 90%;
+    }
+    .foot {
+      color: var(--muted);
+      margin-top: 26px;
+      font-size: 14px;
+    }
   </style>
 </head>
 <body>
-  <p><a href="../index.html">Back to table</a></p>
-  <h1>Problem X: Title</h1>
-  <p class="meta">Status: open | Tags: tag1, tag2</p>
+  <main class="wrap">
+    <a class="crumb" href="../index.html">&#8592; Back to all problems</a>
+    <div class="status" id="status">Unsolved</div>
+    <h1 id="title">Loading...</h1>
+    <p class="subtitle" id="subtitle"></p>
+    <section class="cards" id="cards"></section>
+    <p class="foot" id="edit-note"></p>
+  </main>
+  <script>
+    function parseFrontMatter(mdText) {
+      const match = mdText.match(/^---\n([\s\S]*?)\n---\n?/);
+      if (!match) return { meta: {}, body: mdText };
 
-  <div class="block">
-    <h2>Problem statement</h2>
-    <p>Describe the problem here. Use LaTeX inline $a_n$ and display:</p>
-    <p>$$\min_x f(x) \quad \text{subject to } g(x) \le 0.$$</p>
-  </div>
+      const meta = {};
+      const lines = match[1].split('\n');
+      for (const line of lines) {
+        const idx = line.indexOf(':');
+        if (idx === -1) continue;
+        const key = line.slice(0, idx).trim();
+        const value = line.slice(idx + 1).trim();
+        meta[key] = value;
+      }
+      return { meta, body: mdText.slice(match[0].length) };
+    }
 
-  <div class="block">
-    <h2>References</h2>
-    <ol>
-      <li>Author, title, venue/year, link/DOI.</li>
-    </ol>
-  </div>
+    function splitIntoCards(html) {
+      const wrapper = document.createElement('div');
+      wrapper.innerHTML = html;
+      const cards = [];
+      let current = null;
 
-  <div class="block">
-    <h2>Notes</h2>
-    <ul>
-      <li>Context, known special cases, and variants.</li>
-    </ul>
-  </div>
+      Array.from(wrapper.childNodes).forEach((node) => {
+        if (node.nodeType === Node.ELEMENT_NODE && node.tagName === 'H2') {
+          if (current) cards.push(current);
+          current = document.createElement('article');
+          current.className = 'card';
+          current.appendChild(node.cloneNode(true));
+          return;
+        }
+        if (!current) {
+          current = document.createElement('article');
+          current.className = 'card';
+          const defaultTitle = document.createElement('h2');
+          defaultTitle.textContent = 'Problem';
+          current.appendChild(defaultTitle);
+        }
+        current.appendChild(node.cloneNode(true));
+      });
+
+      if (current) cards.push(current);
+      return cards;
+    }
+
+    async function render() {
+      const fileName = window.location.pathname.split('/').pop() || 'template.html';
+      const mdName = fileName.replace(/\.html$/, '.md');
+      const mdPath = './' + mdName;
+
+      const res = await fetch(mdPath);
+      if (!res.ok) throw new Error('Could not load ' + mdPath);
+      const raw = await res.text();
+
+      const parsed = parseFrontMatter(raw);
+      const meta = parsed.meta;
+      const body = parsed.body;
+
+      document.title = (meta.title || 'Problem') + ' - Problem Page';
+      document.getElementById('title').textContent = meta.title || 'Problem';
+      document.getElementById('status').textContent = meta.status || 'Unsolved';
+      document.getElementById('subtitle').textContent = meta.subtitle || '';
+      document.getElementById('edit-note').innerHTML =
+        'Edit this page in <code>docs/problems/' + mdName + '</code>. LaTeX is rendered using MathJax.';
+
+      marked.setOptions({ breaks: true });
+      const html = marked.parse(body);
+      const cards = splitIntoCards(html);
+      const cardsEl = document.getElementById('cards');
+      cards.forEach((card) => cardsEl.appendChild(card));
+
+      if (window.MathJax && window.MathJax.typesetPromise) {
+        await window.MathJax.typesetPromise();
+      }
+    }
+
+    render().catch((err) => {
+      document.getElementById('title').textContent = 'Failed to load problem';
+      document.getElementById('subtitle').textContent = String(err);
+    });
+  </script>
 </body>
 </html>

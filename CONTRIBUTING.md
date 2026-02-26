@@ -39,9 +39,9 @@ Edits and contributions to the [main table](README.md#table) are welcome.
 
 - Each problem can have a webpage at `docs/problems/<number>.html`.
 - Problem numbers in the tables can link to these pages (for example, `problems/1.html` on GitHub Pages).
+- You edit problem content in Markdown at `docs/problems/<number>.md` (not HTML).
 - LaTeX is supported via MathJax on these pages.
-- To create a new page, copy `docs/problems/template.html` to `docs/problems/<number>.html` and edit:
-  - Problem title and status/tags line
-  - Problem statement
-  - References
-  - Notes
+- To create a new problem page:
+  - Copy `docs/problems/template.html` to `docs/problems/<number>.html`
+  - Copy `docs/problems/template.md` to `docs/problems/<number>.md`
+  - Edit only the `.md` file content and front matter (`title`, `status`, `subtitle`)
