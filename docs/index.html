@@ -9,6 +9,9 @@
     h1 { border-bottom: 1px solid #333; padding-bottom: 0.5rem; }
     a { color: #0969da; }
     .meta { color: #656d76; font-size: 0.9rem; margin-top: 2rem; }
+    table { border-collapse: collapse; width: 100%; margin-top: 1rem; }
+    th, td { border: 1px solid #d0d7de; padding: 0.5rem; text-align: left; vertical-align: top; }
+    th { background: #f6f8fa; }
   </style>
 </head>
 <body>
@@ -19,7 +22,28 @@
     <li>To propose changes, open a PR editing the YAML file.</li>
     <li>See <a href="https://github.com/ddrusvyat/optproblems/blob/main/CONTRIBUTING.md">CONTRIBUTING.md</a> for guidelines.</li>
   </ul>
+  <h2>Table</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>Prize</th>
+        <th>Status</th>
+        <th>Tags</th>
+        <th>Comments</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a href="./problems/1.html">1</a></td>
+        <td>no</td>
+        <td>open</td>
+        <td>nonconvex optimization, optimization theory</td>
+        <td>convergence to local minima</td>
+      </tr>
+    </tbody>
+  </table>
   <p><strong>Repository:</strong> <a href="https://github.com/ddrusvyat/optproblems">github.com/ddrusvyat/optproblems</a></p>
-  <p class="meta">There are 0 problems in total.</p>
+  <p class="meta">There are 1 problems in total.</p>
 </body>
 </html>
