@@ -19,6 +19,4 @@ There are 1 problems in total.
 |---|---|---|---|---|
 | [1](https://ddrusvyat.github.io/optproblems/problems/1.html) | no | open | nonconvex optimization, optimization theory | convergence to local minima |
 <!-- TABLE:END -->
-=======
-This repository is intended as a living, community-oriented collection of such foundational open problems in optimization—questions whose answers may meaningfully influence the future development of the field and its applications.
->>>>>>> daaa18e731003eb8142ef6e01b48aa4c05e24aae
+
