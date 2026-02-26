@@ -28,9 +28,6 @@ Edits and contributions to the [main table](README.md#table) are welcome.
   - "proved": Solved in the affirmative
   - "disproved": Solved in the negative
   - "solved": Resolved in some other fashion
-  - "falsifiable": Open, but can be disproven by a finite counterexample if false
-  - "verifiable": Open, but can be proven by a finite computation if true
-  - "decidable": Both falsifiable and verifiable, not yet solved
   - "open": Completely open
 - **comments**: Miscellaneous notes, alternative names, etc.
 - **tags**: List of strings (e.g., "convex optimization", "nonsmooth", "complexity", "variational analysis").
