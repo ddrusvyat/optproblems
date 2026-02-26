@@ -17,6 +17,6 @@ There are 1 problems in total.
 
 | # | Prize | Status | Tags | Comments |
 |---|---|---|---|---|
-| [1](https://ddrusvyat.github.io/optproblems/problems/1.html) | no | open | nonconvex optimization, optimization theory | convergence to local minima |
+| [1](https://ddrusvyat.github.io/optproblems/problems/1.html) | no | open | nonconvex optimization | Convergence to local minima |
 <!-- TABLE:END -->
 
