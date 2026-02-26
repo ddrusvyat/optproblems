@@ -5,7 +5,7 @@ Optimization has historically been driven by applications: first in engineering 
 
 This repository is intended as a living, community-oriented collection of such foundational open problems in optimization, questions whose answers may meaningfully influence the future development of the field and its applications.
 
-The table below is auto-generated from the YAML file [data/problems.yaml](data/problems.yaml), which is the source of truth for this repository.
+The table below is auto-generated from the YAML file [data/problems.yaml](data/problems.yaml).
 
 - To propose changes, open a PR editing [data/problems.yaml](data/problems.yaml).
 - See [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines and field definitions.
