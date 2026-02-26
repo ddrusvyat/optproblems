@@ -7,6 +7,8 @@ Edits and contributions to the [main table](README.md#table) are welcome.
 1. Open [data/problems.yaml](data/problems.yaml).
 2. Click **Edit** and add or modify an entry. Only the **number** field is mandatory; omit any field for which you have no information.
 3. Open a Pull Request. Do not edit the table in README.md directly—any such edits will be overridden.
+4. Regenerate the tables after YAML edits:
+   - `python3 scripts/update_tables.py`
 
 ## Sample template
 
@@ -34,6 +36,16 @@ Edits and contributions to the [main table](README.md#table) are welcome.
   - "open": Completely open
 - **comments**: Miscellaneous notes, alternative names, etc.
 - **tags**: List of strings (e.g., "convex optimization", "nonsmooth", "complexity", "variational analysis").
+
+## Regenerating tables
+
+After editing `data/problems.yaml`, run:
+
+```bash
+python3 scripts/update_tables.py
+```
+
+This updates the table blocks in both `README.md` and `docs/index.html`.
 
 ## Problem pages with LaTeX
 
