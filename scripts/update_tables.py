@@ -3,7 +3,7 @@
 
 This parser is intentionally lightweight and dependency-free. It supports the
 current repository schema fields used by the public tables:
-number, prize, status.state, comments, tags.
+number, status.state, comments, tags.
 """
 
 from __future__ import annotations
@@ -54,7 +54,6 @@ def parse_problems_yaml(text: str) -> list[dict[str, str | list[str]]]:
             number = stripped.split(":", 1)[1].strip().strip('"').strip("'")
             current = {
                 "number": number,
-                "prize": "no",
                 "status": "open",
                 "comments": "",
                 "tags": [],
@@ -77,9 +76,7 @@ def parse_problems_yaml(text: str) -> list[dict[str, str | list[str]]]:
         if not line.startswith("    "):
             in_status = False
 
-        if stripped.startswith("prize:"):
-            current["prize"] = stripped.split(":", 1)[1].strip().strip('"').strip("'")
-        elif stripped.startswith("comments:"):
+        if stripped.startswith("comments:"):
             current["comments"] = stripped.split(":", 1)[1].strip().strip('"').strip("'")
         elif stripped.startswith("tags:"):
             current["tags"] = parse_inline_list(stripped.split(":", 1)[1].strip())
@@ -101,17 +98,16 @@ def replace_between_markers(text: str, replacement: str) -> str:
 
 def render_markdown_table(problems: list[dict[str, str | list[str]]]) -> str:
     lines = [f"There are {len(problems)} problems in total.", ""]
-    lines.append("| # | Prize | Status | Tags | Comments |")
-    lines.append("|---|---|---|---|---|")
+    lines.append("| # | Status | Tags | Comments |")
+    lines.append("|---|---|---|---|")
     for p in problems:
         number = str(p["number"])
-        prize = str(p["prize"])
         status = str(p["status"])
         tags = ", ".join(p["tags"]) if isinstance(p["tags"], list) else ""
         comments = str(p["comments"])
         lines.append(
             f"| [{number}](https://ddrusvyat.github.io/optproblems/problems/{number}.html) "
-            f"| {prize} | {status} | {tags} | {comments} |"
+            f"| {status} | {tags} | {comments} |"
         )
     return "\n".join(lines)
 
@@ -120,7 +116,6 @@ def render_html_table(problems: list[dict[str, str | list[str]]]) -> str:
     lines = [f"<h2>Table</h2>", "<table>", "  <thead>", "    <tr>"]
     lines += [
         "      <th>#</th>",
-        "      <th>Prize</th>",
         "      <th>Status</th>",
         "      <th>Tags</th>",
         "      <th>Comments</th>",
@@ -130,14 +125,12 @@ def render_html_table(problems: list[dict[str, str | list[str]]]) -> str:
     ]
     for p in problems:
         number = escape(str(p["number"]))
-        prize = escape(str(p["prize"]))
         status = escape(str(p["status"]))
         tags = escape(", ".join(p["tags"])) if isinstance(p["tags"], list) else ""
         comments = escape(str(p["comments"]))
         lines += [
             "    <tr>",
             f'      <td><a href="./problems/{number}.html">{number}</a></td>',
-            f"      <td>{prize}</td>",
             f"      <td>{status}</td>",
             f"      <td>{tags}</td>",
             f"      <td>{comments}</td>",

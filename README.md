@@ -15,8 +15,8 @@ The table below is auto-generated from the YAML file [data/problems.yaml](data/p
 <!-- TABLE:START -->
 There are 1 problems in total.
 
-| # | Prize | Status | Tags | Comments |
-|---|---|---|---|---|
-| [1](https://ddrusvyat.github.io/optproblems/problems/1.html) | no | open | nonconvex optimization | Convergence to local minima |
+| # | Status | Tags | Comments |
+|---|---|---|---|
+| [1](https://ddrusvyat.github.io/optproblems/problems/1.html) | open | nonconvex optimization | Convergence to local minima |
 <!-- TABLE:END -->
 
